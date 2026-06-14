@@ -22,15 +22,19 @@ import org.jspecify.annotations.Nullable;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SkyRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.chunk.ChunkSectionsToRender;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
+import net.minecraft.client.renderer.state.level.SkyRenderState;
 
 import net.fabricmc.fabric.api.client.rendering.v1.level.AbstractLevelRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelTerrainRenderContext;
+import net.fabricmc.fabric.api.client.rendering.v1.level.sky.SkyRenderContext;
 
-public final class LevelRenderContextImpl implements AbstractLevelRenderContext, LevelTerrainRenderContext, LevelRenderContext {
+public final class LevelRenderContextImpl implements AbstractLevelRenderContext, LevelTerrainRenderContext, LevelRenderContext, SkyRenderContext {
 	private GameRenderer gameRenderer;
 	private LevelRenderer levelRenderer;
 	private LevelRenderState levelRenderState;
@@ -40,6 +44,7 @@ public final class LevelRenderContextImpl implements AbstractLevelRenderContext,
 	@Nullable
 	private PoseStack poseStack;
 	private MultiBufferSource.BufferSource bufferSource;
+	private SkyRenderer skyRenderer;
 
 	public void prepare(
 			GameRenderer gameRenderer,
@@ -47,7 +52,8 @@ public final class LevelRenderContextImpl implements AbstractLevelRenderContext,
 			LevelRenderState levelRenderState,
 			ChunkSectionsToRender sectionsToRender,
 			SubmitNodeCollector nodeCollector,
-			MultiBufferSource.BufferSource bufferSource
+			MultiBufferSource.BufferSource bufferSource,
+			SkyRenderer skyRenderer
 	) {
 		this.gameRenderer = gameRenderer;
 		this.levelRenderer = levelRenderer;
@@ -56,6 +62,7 @@ public final class LevelRenderContextImpl implements AbstractLevelRenderContext,
 
 		this.nodeCollector = nodeCollector;
 		this.bufferSource = bufferSource;
+		this.skyRenderer = skyRenderer;
 
 		poseStack = null;
 	}
@@ -98,5 +105,20 @@ public final class LevelRenderContextImpl implements AbstractLevelRenderContext,
 	@Override
 	public MultiBufferSource.BufferSource bufferSource() {
 		return bufferSource;
+	}
+
+	@Override
+	public SkyRenderer skyRenderer() {
+		return skyRenderer;
+	}
+
+	@Override
+	public SkyRenderState skyRenderState() {
+		return levelRenderState.skyRenderState;
+	}
+
+	@Override
+	public CameraRenderState cameraRenderState() {
+		return levelRenderState.cameraRenderState;
 	}
 }

@@ -16,8 +16,20 @@
 
 package net.fabricmc.fabric.api.client.rendering.v1.level.sky;
 
+/**
+ * The vanilla celestial element being rendered.
+ */
 public enum CelestialType {
+	/**
+	 * The vanilla sun.
+	 */
 	SUN,
+	/**
+	 * The vanilla moon.
+	 */
 	MOON,
+	/**
+	 * The vanilla stars.
+	 */
 	STARS
 }

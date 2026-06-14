@@ -16,18 +16,41 @@
 
 package net.fabricmc.fabric.api.client.rendering.v1.level.sky;
 
-import net.minecraft.client.renderer.state.level.CameraRenderState;
-
 import org.jetbrains.annotations.ApiStatus;
 
 import net.minecraft.client.renderer.SkyRenderer;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.state.level.SkyRenderState;
 
+import net.fabricmc.fabric.api.client.rendering.v1.level.AbstractLevelRenderContext;
+
+/**
+ * Context passed to sky rendering events.
+ *
+ * <p>This context is scoped to the level render frame and exposes the sky-specific render state extracted for that
+ * frame. Use {@link net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents#END_EXTRACTION} to prepare
+ * additional render state before sky rendering begins.
+ */
 @ApiStatus.NonExtendable
-public interface SkyRenderContext {
+public interface SkyRenderContext extends AbstractLevelRenderContext {
+	/**
+	 * The sky renderer instance used by the current sky pass.
+	 *
+	 * @return sky renderer instance
+	 */
 	SkyRenderer skyRenderer();
 
+	/**
+	 * The sky render state for the current frame.
+	 *
+	 * @return sky render state
+	 */
 	SkyRenderState skyRenderState();
 
+	/**
+	 * The camera render state for the current frame.
+	 *
+	 * @return camera render state
+	 */
 	CameraRenderState cameraRenderState();
 }

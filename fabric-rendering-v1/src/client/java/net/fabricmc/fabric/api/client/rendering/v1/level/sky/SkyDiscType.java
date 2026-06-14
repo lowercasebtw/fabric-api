@@ -16,7 +16,16 @@
 
 package net.fabricmc.fabric.api.client.rendering.v1.level.sky;
 
+/**
+ * The vanilla sky disc being rendered.
+ */
 public enum SkyDiscType {
+	/**
+	 * The top sky disc.
+	 */
 	TOP,
+	/**
+	 * The bottom sky disc, also known as the dark disc.
+	 */
 	BOTTOM
 }
